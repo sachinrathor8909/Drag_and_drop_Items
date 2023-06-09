@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <mete name="viewport" content="width=device-width,initial-scale.0"></mete>
+        <title>Drag & Drop</title>
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body>
+        <div class="container">  
+            <div id="left">
+                <div class="list" draggable="true"><img src="image.png"><img src="tree.webp"> List Item 1</div>
+                <div class="list" draggable="true"><img src="image.png"><img src="tree.webp"> List Item 2</div>
+                <div class="list" draggable="true"><img src="image.png"><img src="tree.webp"> List Item 3</div>
+                <div class="list" draggable="true"><img src="image.png"><img src="tree.webp"> List Item 4</div>
+                <div class="list" draggable="true"><img src="image.png"><img src="tree.webp"> List Item 5</div>
+            </div>
+
+            <div id="right"></div>
+        </div>
+            <button class="btn btn1" id="resetLeftButton"> Left Reset</button>
+            <button class="btn btn1" id="clearButton"> Right Clear</button>
+    
+        <script>
+
+            let lists = document.getElementsByClassName("list");
+            let rightBox = document.getElementById("right");
+            let leftBox = document.getElementById("left");
+            let clearButton = document.getElementById("clearButton");
+            let resetLeftButton = document.getElementById("resetLeftButton");
+            let originalLeftBoxContent = leftBox.innerHTML;
+
+            for (list of lists) {
+                list.addEventListener("dragstart", function (e) {
+                    let selected = e.target;
+                    selected.classList.add("dragged");
+
+                    rightBox.addEventListener("dragover", function (e) {
+                        e.preventDefault();
+                    });
+                    rightBox.addEventListener("drop", function (e) {
+                        rightBox.appendChild(selected);
+                        selected.classList.remove("dragged");
+                        selected = null;
+                        alert("Item dropped on the right side: Successful!");
+                        
+                    });
+
+                    leftBox.addEventListener("dragover", function (e) {
+                        e.preventDefault();
+                    });
+                    leftBox.addEventListener("drop", function (e) {
+                        leftBox.appendChild(selected);
+                        selected.classList.remove("dragged");
+                        selected = null;
+                        alert("Item dropped on the left side: Successful!");
+                    });
+                });
+            }           
+            clearButton.addEventListener("click", function () {
+                // Clear the right box
+                rightBox.innerHTML = "";
+
+                // Reset the left box by restoring the original content
+                rightBox.innerHTML = originalRightBoxContent;
+            });
+            
+            resetLeftButton.addEventListener("click", function () {
+                // Reset the left box by restoring the original content
+                leftBox.innerHTML = originalLeftBoxContent;
+            });
+            
+                
+            
+        </script>
+
+    </body>
+</html>
